@@ -7,22 +7,21 @@ class ISBN13
 
   def initialize(number, debug=true)
     @number = number.freeze
-    @digits = @number.digits.freeze
+    @digits = @number.digits.reverse.freeze
     @debug = debug
 
     raise InvalidLength if @digits.length != 13
   end
 
+  # The expected check digit based on the entered 13-digit combination.
+  # Checked against the calculated check digit
   def expected_check_digit
-    digits.first
+    digits.last
   end
 
-  def first_12_digits
-    first_12_digits = digits.drop(1).reverse
-  end
-
+  # The calculated check digit checked against the last ISBN13 digit
   def calculate_check_digit
-    sum = first_12_digits.each_with_index.sum do |digit, index|
+    sum = digits.first(12).each_with_index.sum do |digit, index|
       if index.even? # 1st 3rd 5th ... 11th digit
         log "Adding (#{digit} * 1)"
         digit

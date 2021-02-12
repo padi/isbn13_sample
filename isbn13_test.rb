@@ -10,7 +10,7 @@ class ISBN13Test < Minitest::Test
     assert_equal 2, ISBN13.new(9781861972712).calculate_check_digit
   end
 
-  def test_invalid_isbn13
+  def test_invalid_length
     assert_raises(ISBN13::InvalidLength) { ISBN13.new(1234567890) }
   end
 end
