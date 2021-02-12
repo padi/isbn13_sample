@@ -5,7 +5,7 @@ class ISBN13
 
   class InvalidLength < StandardError; end
 
-  def initialize(number, debug=true)
+  def initialize(number, debug=false)
     @number = number.freeze
     @digits = @number.digits.reverse.freeze
     @debug = debug
@@ -43,6 +43,10 @@ class ISBN13
     log "check_digit is #{check_digit}"
 
     check_digit
+  end
+
+  def check_digit_valid?
+    self.expected_check_digit == self.calculate_check_digit
   end
 
   def log *args
